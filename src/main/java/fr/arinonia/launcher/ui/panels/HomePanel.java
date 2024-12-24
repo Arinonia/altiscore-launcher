@@ -48,8 +48,11 @@ public class HomePanel extends AbstractPanel {
         final HBox topBar = new HBox(15);
         topBar.setAlignment(Pos.CENTER_RIGHT);
         topBar.setPadding(new Insets(10, 15, 10, 15));
-        topBar.setStyle("-fx-background-color: rgba(0, 0, 0, 0.3); -fx-background-radius: 10;");
-
+        topBar.setStyle("""
+            -fx-background-color: rgba(0, 0, 0, 0.3);
+            -fx-background-radius: 10;
+            -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 0);
+        """);
         final ImageView logoView = new ImageView(new Image(getClass().getResourceAsStream("/images/icon.png")));
         logoView.setFitHeight(30);
         logoView.setFitWidth(30);
@@ -110,7 +113,7 @@ public class HomePanel extends AbstractPanel {
         settingsButtons.setAlignment(Pos.TOP_CENTER);
 
         final Button[] settingsOptions = {
-                createSettingsButton("Général", "⚙️", true),
+                createSettingsButton("Général", "⚙", true),
                 createSettingsButton("Java", "☕", true),
                 createSettingsButton("RAM", "📊", false),
                 createSettingsButton("Launcher", "🚀", true)
@@ -126,8 +129,15 @@ public class HomePanel extends AbstractPanel {
         final HBox serverItem = new HBox(15);
         serverItem.setPadding(new Insets(15));
         serverItem.setAlignment(Pos.CENTER_LEFT);
-        serverItem.setStyle("-fx-background-color: rgba(149, 128, 255, 0.1); -fx-background-radius: 10;");
+        final String baseStyle = "-fx-background-color: rgba(149, 128, 255, 0.1); -fx-background-radius: 10;";
 
+        serverItem.setStyle(baseStyle);
+        serverItem.setOnMouseEntered(e ->
+                serverItem.setStyle(baseStyle.replace("0.1", "0.2"))
+        );
+        serverItem.setOnMouseExited(e ->
+                serverItem.setStyle(baseStyle)
+        );
         final Region iconPlaceholder = new Region();
         iconPlaceholder.setPrefSize(32, 32);
         iconPlaceholder.setStyle("-fx-background-color: rgba(255, 255, 255, 0.1); -fx-background-radius: 5;");

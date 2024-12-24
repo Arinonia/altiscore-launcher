@@ -33,6 +33,15 @@ public class PanelManager {
         this.loadFonts();
         LOGGER.info("Fonts loaded");
 
+        //try to fix the white screen when app is starting
+
+        /* well it's not working, but it's a good try*/
+        final Scene scene = new Scene(this.layout = new GridPane());
+        scene.setFill(javafx.scene.paint.Color.rgb(36, 17, 70));
+        this.layout.setStyle("-fx-background-color: rgb(36, 17, 70);");
+        //let's try something else
+        this.stage.setOpacity(0.0D); // and it's still not working help me please :(
+
         this.stage.setTitle(String.format("%s | %s", Constants.APP_NAME, Constants.APP_VERSION));
         this.stage.setMinWidth(1280.0D);
         this.stage.setMinHeight(720.0D);
@@ -45,23 +54,22 @@ public class PanelManager {
         if (is != null) {
             this.stage.getIcons().add(new Image(is));
         }
-        this.stage.setScene(new Scene(this.layout = new GridPane()));
-        this.layout.setStyle("-fx-background-color: rgb(36, 17, 70);");
-        this.stage.getScene().setFill(javafx.scene.paint.Color.rgb(36, 17, 70));
+        this.stage.setScene(scene);
+        this.stage.setOpacity(1.0D);
         this.stage.show();
     }
 
-    public void addPanel(IPanel panel) {
-        panels.put(panel.getClass(), panel);
+    public void addPanel(final IPanel panel) {
+        this.panels.put(panel.getClass(), panel);
         LOGGER.info("Added panel: {}", panel.getClass().getSimpleName());
     }
 
-    public <T extends IPanel> T getPanel(Class<T> panelClass) {
-        return panelClass.cast(panels.get(panelClass));
+    public <T extends IPanel> T getPanel(final Class<T> panelClass) {
+        return panelClass.cast(this.panels.get(panelClass));
     }
 
     public void showPanel(final Class<? extends IPanel> panelClass, final boolean transition) {
-        final IPanel panel = panels.get(panelClass);
+        final IPanel panel = this.panels.get(panelClass);
         if (panel == null) {
             LOGGER.error("Panel not found: {}", panelClass.getSimpleName());
             return;
