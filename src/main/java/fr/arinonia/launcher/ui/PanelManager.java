@@ -47,7 +47,8 @@ public class PanelManager {
             this.stage.getIcons().add(new Image(is));
         }
         this.stage.setScene(new Scene(this.layout = new GridPane()));
-        //this.setBackground();
+        this.layout.setStyle("-fx-background-color: rgb(36, 17, 70);");
+        this.stage.getScene().setFill(javafx.scene.paint.Color.rgb(36, 17, 70));
         this.stage.show();
     }
 

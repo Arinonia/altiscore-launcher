@@ -142,17 +142,17 @@ public class HomePanel extends AbstractPanel {
         statusContainer.setAlignment(Pos.CENTER_LEFT);
 
         final Label versionLabel = new Label("Version " + version);
-        versionLabel.setStyle("-fx-text-fill: rgb(180, 180, 180); -fx-font-size: 12px; -fx-font-family: 'Roboto';");
+        versionLabel.setStyle("-fx-text-fill: rgb(180, 180, 180); -fx-font-size: 12px; -fx-font-family: 'Bahnschrift';");
 
         final Region statusDot = new Region();
         statusDot.setPrefSize(8, 8);
         statusDot.setStyle("-fx-background-radius: 4; -fx-background-color: " + (isOnline ? "#44b700" : "#ff3333") + ";");
 
         final Label statusLabel = new Label(isOnline ? "En ligne" : "Hors ligne");
-        statusLabel.setStyle("-fx-text-fill: " + (isOnline ? "#44b700" : "#ff3333") + "; -fx-font-size: 12px; -fx-font-family: 'Roboto';");
+        statusLabel.setStyle("-fx-text-fill: " + (isOnline ? "#44b700" : "#ff3333") + "; -fx-font-size: 12px; -fx-font-family: 'Bahnschrift';");
 
         final Label playersLabel = new Label(String.format("%d/%d joueurs", players, maxPlayers));
-        playersLabel.setStyle("-fx-text-fill: rgb(180, 180, 180); -fx-font-size: 12px; -fx-font-family: 'Roboto';");
+        playersLabel.setStyle("-fx-text-fill: rgb(180, 180, 180); -fx-font-size: 12px; -fx-font-family: 'Bahnschrift';");
 
         final CustomButton joinButton = new CustomButton("Rejoindre");
         joinButton.setDisable(!isOnline);

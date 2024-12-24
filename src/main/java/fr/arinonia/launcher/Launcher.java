@@ -21,4 +21,8 @@ public class Launcher {
         this.panelManager.addPanel(new HomePanel());
         this.panelManager.showPanel(LoadingPanel.class);
     }
+
+    public PanelManager getPanelManager() {
+        return this.panelManager;
+    }
 }
