@@ -46,7 +46,6 @@ public abstract class AbstractPanel implements IPanel {
         return this.layout;
     }
 
-
     @Override
     public PanelManager getPanelManager() {
         return this.panelManager;

@@ -23,7 +23,6 @@ public class PanelManager {
     private IPanel currentPanel;
 
 
-
     public PanelManager(final Launcher launcher) {
         this.launcher = launcher;
     }
@@ -94,7 +93,6 @@ public class PanelManager {
         Font.loadFont(this.getClass().getResourceAsStream("/fonts/roboto.ttf"), 12.0D);
         Font.loadFont(this.getClass().getResourceAsStream("/fonts/bahnschrift.ttf"), 12.0D);
     }
-
 
     public Launcher getLauncher() {
         return this.launcher;
