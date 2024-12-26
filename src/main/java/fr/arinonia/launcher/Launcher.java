@@ -1,8 +1,8 @@
 package fr.arinonia.launcher;
 
 import fr.arinonia.launcher.ui.PanelManager;
-import fr.arinonia.launcher.ui.panels.HomePanel;
-import fr.arinonia.launcher.ui.panels.LoadingPanel;
+import fr.arinonia.launcher.ui.panels.home.HomePanel;
+import fr.arinonia.launcher.ui.panels.loading.LoadingPanel;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
