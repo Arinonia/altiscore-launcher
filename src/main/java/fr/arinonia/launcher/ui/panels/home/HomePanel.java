@@ -14,12 +14,11 @@ public class HomePanel extends AbstractPanel {
     @Override
     protected void setupPanel() {
         this.layout.setStyle("-fx-background-color: linear-gradient(to bottom right, rgb(36, 17, 70), rgb(48, 25, 88));");
-
         final VBox mainContainer = new VBox(10);
         this.setPriority(mainContainer);
         mainContainer.setPadding(new Insets(20));
 
-        final TopBar topBar = new TopBar();
+        final TopBar topBar = new TopBar(this);
         final HBox contentContainer = createContentContainer();
 
         mainContainer.getChildren().addAll(topBar, contentContainer);
@@ -64,11 +63,11 @@ public class HomePanel extends AbstractPanel {
 
     private void initializeServers() {
         this.serversContainer.getChildren().addAll(
-                new ServerItem("Altis Life", "1.20.1", true, 145, 200),
-                new ServerItem("SkyBlock", "1.20.1", true, 87, 100),
-                new ServerItem("Prison", "1.20.2", false, 0, 150),
-                new ServerItem("Creative", "1.20.1", true, 23, 50),
-                new ServerItem("Survie", "1.20.1", true, 56, 100)
+                new ServerItem(this, "Altis Life", "1.20.1", true, 145, 200),
+                new ServerItem(this, "SkyBlock", "1.20.1", true, 87, 100),
+                new ServerItem(this, "Prison", "1.20.2", false, 0, 150),
+                new ServerItem(this, "Creative", "1.20.1", true, 23, 50),
+                new ServerItem(this, "Survie", "1.20.1", true, 56, 100)
                 );
     }
 }

@@ -68,6 +68,10 @@ public class AuthConfigManager {
         save();
     }
 
+    public void addAccount(final Account account) {
+        addAccount(account.getUuid(), account.getUsername(), account.getAccessToken(), account.getRefreshToken());
+    }
+
     public void removeAccount(final String uuid) {
         this.authConfig.getAccounts().removeIf(account -> account.getUuid().equals(uuid));
         if (this.authConfig.getSelectedAccount() != null && this.authConfig.getSelectedAccount().equals(uuid)) {
@@ -106,5 +110,9 @@ public class AuthConfigManager {
                     account.setRefreshToken(refreshToken);
                     save();
                 });
+    }
+
+    public AuthConfig getAuthConfig() {
+        return this.authConfig;
     }
 }

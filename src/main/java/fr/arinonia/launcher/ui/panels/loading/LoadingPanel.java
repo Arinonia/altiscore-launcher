@@ -132,19 +132,22 @@ public class LoadingPanel extends AbstractPanel {
     private void startLoading() {
         new Thread(() -> {
             try {
-                updateStatus("Vérification", "Recherche de mises à jour...", 0.2);
+                updateStatus("Vérification", "Vérification des comptes...", 0.0D);
+                this.panelManager.getLauncher().checkAuth();
+                Thread.sleep(800);
+                updateStatus("Vérification", "Recherche de mises à jour...", 0.2D);
                 Thread.sleep(1800);
 
-                updateStatus("Configuration", "Chargement des paramètres...", 0.4);
+                updateStatus("Configuration", "Chargement des paramètres...", 0.4D);
                 Thread.sleep(1800);
 
-                updateStatus("Actualités", "Récupération des news...", 0.6);
+                updateStatus("Actualités", "Récupération des news...", 0.6D);
                 Thread.sleep(1800);
 
-                updateStatus("Serveurs", "Connexion aux serveurs de jeu...", 0.8);
+                updateStatus("Serveurs", "Connexion aux serveurs de jeu...", 0.8D);
                 Thread.sleep(1800);
 
-                updateStatus("Finalisation", "Lancement du launcher...", 1.0);
+                updateStatus("Finalisation", "Lancement du launcher...", 1.0D);
             } catch (final InterruptedException e) {
                 e.printStackTrace();
             }

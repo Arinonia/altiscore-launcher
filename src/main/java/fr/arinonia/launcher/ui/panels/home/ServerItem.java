@@ -1,5 +1,6 @@
 package fr.arinonia.launcher.ui.panels.home;
 
+import fr.arinonia.launcher.config.models.Account;
 import fr.arinonia.launcher.ui.components.CustomButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,8 +12,7 @@ import javafx.scene.layout.VBox;
 
 public class ServerItem extends HBox {
     private static final String BASE_STYLE = "-fx-background-color: rgba(149, 128, 255, 0.1); -fx-background-radius: 10;";
-
-    public ServerItem(final String name, final String version, final boolean isOnline, final int players, final int maxPlayers) {
+    public ServerItem(final HomePanel homePanel, final String name, final String version, final boolean isOnline, final int players, final int maxPlayers) {
         super(15);
         this.setPadding(new Insets(15));
         this.setAlignment(Pos.CENTER_LEFT);
@@ -21,7 +21,8 @@ public class ServerItem extends HBox {
 
         final Region iconPlaceholder = createIconPlaceholder();
         final VBox serverInfo = createServerInfo(name, version, isOnline, players, maxPlayers);
-        final CustomButton joinButton = createJoinButton(isOnline);
+        final Account account = homePanel.getPanelManager().getLauncher().getSelectedAccount();
+        final CustomButton joinButton = createJoinButton(account != null && isOnline);
 
         this.getChildren().addAll(iconPlaceholder, serverInfo, joinButton);
     }
