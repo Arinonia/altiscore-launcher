@@ -8,4 +8,5 @@ public class Constants {
      * not going to stay, discord url will be parsed from API
      */
     public static final String DISCORD_URL = "https://discord.gg/Xut47pGAXC";
+    public static final String LAUNCHER_FOLDER_NAME = ".altiscore";
 }
