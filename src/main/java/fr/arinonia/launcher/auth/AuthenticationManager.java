@@ -3,7 +3,6 @@ package fr.arinonia.launcher.auth;
 import fr.arinonia.launcher.Launcher;
 import fr.arinonia.launcher.config.AuthConfigManager;
 import fr.arinonia.launcher.config.models.Account;
-import fr.arinonia.launcher.utils.CallBack;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthResult;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
@@ -12,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.CompletableFuture;
 
+// with the new loading system, I need to rework the authentication system
 public class AuthenticationManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationManager.class);
@@ -26,13 +26,13 @@ public class AuthenticationManager {
         this.launcher = launcher;
     }
 
-    public void authenticate(final CallBack callBack) {
+    public void authenticate() {
         LOGGER.info("Authenticating...");
         CompletableFuture<MicrosoftAuthResult> result = this.microsoftAuthenticator.loginWithAsyncWebview();
-        result.thenAccept(r -> handleAuthResult(r, callBack));
+        result.thenAccept(this::handleAuthResult);
     }
 
-    private void handleAuthResult(final MicrosoftAuthResult result, final CallBack callBack) {
+    private void handleAuthResult(final MicrosoftAuthResult result) {
         LOGGER.info("Successfully authenticated with Microsoft");
         final Account account = new Account();
 
@@ -43,10 +43,6 @@ public class AuthenticationManager {
 
         this.authConfigManager.addAccount(account);
         this.launcher.setSelectedAccount(account);
-
-        if (callBack != null) {
-            callBack.done();
-        }
     }
 
     public boolean refreshToken(final Account account) {

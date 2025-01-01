@@ -15,7 +15,6 @@ import java.util.List;
 public class AuthConfigManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthConfigManager.class);
-    private static final String CONFIG_FILE = "auth.json";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     private AuthConfig authConfig;

@@ -3,6 +3,7 @@ package fr.arinonia.launcher.ui.panels.loading;
 import fr.arinonia.launcher.ui.AbstractPanel;
 
 import fr.arinonia.launcher.ui.panels.home.HomePanel;
+import fr.arinonia.launcher.utils.CallBack;
 import fr.arinonia.launcher.utils.Constants;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
@@ -98,13 +99,14 @@ public class LoadingPanel extends AbstractPanel {
 
             this.progressBar.updateProgress(progress);
 
-            if (progress >= 1.0) {
+            /*if (progress >= 1.0) {
                 onLoadingComplete();
-            }
+            }*/
         });
     }
 
     private void onLoadingComplete() {
+
         final FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.5), this.layout);
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
@@ -130,27 +132,36 @@ public class LoadingPanel extends AbstractPanel {
     }
 
     private void startLoading() {
-        new Thread(() -> {
-            try {
-                updateStatus("Vérification", "Vérification des comptes...", 0.0D);
-                this.panelManager.getLauncher().checkAuth();
-                Thread.sleep(800);
-                updateStatus("Vérification", "Recherche de mises à jour...", 0.2D);
-                Thread.sleep(1800);
-
-                updateStatus("Configuration", "Chargement des paramètres...", 0.4D);
-                Thread.sleep(1800);
-
-                updateStatus("Actualités", "Récupération des news...", 0.6D);
-                Thread.sleep(1800);
-
-                updateStatus("Serveurs", "Connexion aux serveurs de jeu...", 0.8D);
-                Thread.sleep(1800);
-
-                updateStatus("Finalisation", "Lancement du launcher...", 1.0D);
-            } catch (final InterruptedException e) {
-                e.printStackTrace();
+        this.getPanelManager().getLauncher().getLauncherLoader().loadAll(new CallBack() {
+            @Override
+            public void onProgress(final double progress, final String status) {
+                System.out.println("Progress: " + progress + " - " + status);
+                Platform.runLater(() -> updateStatus(status, null, progress));
             }
-        }).start();
+
+            @Override
+            public void onComplete() {
+                if (getPanelManager().getLauncher().getLauncherLoader().hasErrors()) {
+                    getPanelManager().getLauncher().getLauncherLoader().getErrors().forEach((component, error) -> {
+                        System.out.println("Error: " + component + " - " + error);
+                    });
+                    showError("Une erreur est survenue lors du chargement des composants.");
+                    return;
+                }
+                Platform.runLater(() -> onLoadingComplete());
+            }
+
+            @Override
+            public void onError(final String error) {
+                Platform.runLater(() -> showError(error));
+            }
+        });
+
+    }
+
+    // need a better way to handle errors (add exception and step to CallBack)
+    // maybe i need to create a notification system from panelManager
+    private void showError(final String error) {
+        System.out.println("Error: " + error);
     }
 }

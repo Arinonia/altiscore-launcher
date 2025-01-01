@@ -74,7 +74,7 @@ public class TopBar extends HBox {
     private CustomButton createAuthButton() {
         final CustomButton authButton = new CustomButton("Se connecter");
         authButton.setOnAction(e -> {
-            this.homePanel.getPanelManager().getLauncher().getAuthenticationManager().authenticate(this::updateAccountSection);
+            this.homePanel.getPanelManager().getLauncher().getAuthenticationManager().authenticate();
         });
         return authButton;
     }

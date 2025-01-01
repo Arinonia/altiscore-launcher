@@ -1,5 +1,7 @@
 package fr.arinonia.launcher.utils;
 
 public interface CallBack {
-    void done();
+    default void onProgress(final double progress, final String status) {}
+    default void onComplete() {}
+    default void onError(String error) {}
 }
