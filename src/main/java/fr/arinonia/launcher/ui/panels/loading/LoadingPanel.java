@@ -106,7 +106,6 @@ public class LoadingPanel extends AbstractPanel {
     }
 
     private void onLoadingComplete() {
-
         final FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.5), this.layout);
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);

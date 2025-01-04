@@ -2,6 +2,7 @@ package fr.arinonia.launcher.ui.panels.home;
 
 import fr.arinonia.launcher.config.models.Account;
 import fr.arinonia.launcher.ui.components.CustomButton;
+import fr.arinonia.launcher.utils.CallBack;
 import fr.arinonia.launcher.utils.Constants;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -16,6 +17,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 public class TopBar extends HBox {
     private static final String STYLE = "-fx-background-color: rgba(0, 0, 0, 0.3); -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 0);";
@@ -23,10 +25,10 @@ public class TopBar extends HBox {
     private Node accountSection;
 
     public TopBar(final HomePanel homePanel) {
-        super(15);
+        super(15.0D);
         this.homePanel = homePanel;
         this.setAlignment(Pos.CENTER_RIGHT);
-        this.setPadding(new Insets(10, 15, 10, 15));
+        this.setPadding(new Insets(10.0D, 15.0D, 10.0D, 15.0D));
         this.setStyle(STYLE);
 
         setupComponents();
@@ -44,8 +46,8 @@ public class TopBar extends HBox {
 
     private ImageView createLogo() {
         final ImageView logoView = new ImageView(new Image(getClass().getResourceAsStream("/images/icon.png")));
-        logoView.setFitHeight(30);
-        logoView.setFitWidth(30);
+        logoView.setFitHeight(30.0D);
+        logoView.setFitWidth(30.0D);
         return logoView;
     }
 
@@ -63,7 +65,6 @@ public class TopBar extends HBox {
 
     private Node createAccountSection() {
         final Account account = this.homePanel.getPanelManager().getLauncher().getSelectedAccount();
-        System.out.println(account);
         if (account == null) {
             return createAuthButton();
         } else {
@@ -74,22 +75,43 @@ public class TopBar extends HBox {
     private CustomButton createAuthButton() {
         final CustomButton authButton = new CustomButton("Se connecter");
         authButton.setOnAction(e -> {
-            this.homePanel.getPanelManager().getLauncher().getAuthenticationManager().authenticate();
+            this.homePanel.getPanelManager().getLauncher().getAuthenticationManager().authenticate(new CallBack() {
+                @Override
+                public void onComplete() {
+                    updateAccountSection();
+                }
+            });
         });
         return authButton;
     }
 
     private HBox createAccountInfo(final Account account) {
-        final HBox container = new HBox(10);
+        final HBox container = new HBox(10.0D);
         container.setAlignment(Pos.CENTER);
 
-        // Avatar (placeholder pour l'instant)
-        final Region avatarPlaceholder = new Region();
-        avatarPlaceholder.setPrefSize(30, 30);
-        avatarPlaceholder.setStyle("-fx-background-color: rgba(255, 255, 255, 0.1); -fx-background-radius: 15;");
+        final ImageView avatarView = new ImageView();
+        avatarView.setFitHeight(30.0D);
+        avatarView.setFitWidth(30.0D);
 
-        // Informations du compte
-        final VBox accountDetails = new VBox(2);
+        final Region placeholder = new Region();
+        placeholder.setPrefSize(30.0D, 30.0D);
+        placeholder.setStyle("-fx-background-color: rgba(255, 255, 255, 0.1); -fx-background-radius: 15;");
+        avatarView.setClip(new Circle(15.0D, 15.0D, 15.0D));
+
+        new Thread(() -> {
+            final Image avatar = new Image("https://mc-heads.net/avatar/" + account.getUuid(),
+                    true);
+            avatar.progressProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue.doubleValue() == 1.0D) {
+                    Platform.runLater(() -> {
+                        avatarView.setImage(avatar);
+                    });
+                }
+            });
+        }).start();
+        avatarView.setImage(null);
+
+        final VBox accountDetails = new VBox(2.0D);
         accountDetails.setAlignment(Pos.CENTER_LEFT);
 
         final Label usernameLabel = new Label(account.getUsername());
@@ -100,23 +122,20 @@ public class TopBar extends HBox {
 
         accountDetails.getChildren().addAll(usernameLabel, accountTypeLabel);
 
-        // Bouton de déconnexion
-        final CustomButton logoutButton = new CustomButton("⚪");
-        logoutButton.setStyle("-fx-background-color: transparent; -fx-text-fill: rgb(180, 180, 180);");
+        final CustomButton logoutButton = new CustomButton("Déconnexion");
+        logoutButton.setStyle("-fx-background-color: transparent; -fx-text-fill: rgb(180, 180, 180); -fx-font-family: 'Bahnschrift';");
         logoutButton.setOnAction(e -> {
-            //this.homePanel.getPanelManager().getLauncher().getAuthenticationManager().logout();
-            this.homePanel.getPanelManager().getLauncher().setSelectedAccount(null);//! replace with another account if you have multiple accounts
-            updateAccountSection(); // Met à jour la section après déconnexion
-            System.out.println("logout");
+            this.homePanel.getPanelManager().getLauncher().setSelectedAccount(null);
+            updateAccountSection();
         });
         logoutButton.setOnMouseEntered(e ->
-                logoutButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white;")
+                logoutButton.setStyle("-fx-background-color: rgba(180, 180, 180, 0.2); -fx-text-fill: white; -fx-font-family: 'Bahnschrift';")
         );
         logoutButton.setOnMouseExited(e ->
-                logoutButton.setStyle("-fx-background-color: transparent; -fx-text-fill: rgb(180, 180, 180);")
+                logoutButton.setStyle("-fx-background-color: transparent; -fx-text-fill: rgb(180, 180, 180); -fx-font-family: 'Bahnschrift';")
         );
 
-        container.getChildren().addAll(avatarPlaceholder, accountDetails, logoutButton);
+        container.getChildren().addAll(avatarView, accountDetails, logoutButton);
         return container;
     }
 
