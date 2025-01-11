@@ -134,7 +134,7 @@ public class LoadingPanel extends AbstractPanel {
         this.getPanelManager().getLauncher().getLauncherLoader().loadAll(new CallBack() {
             @Override
             public void onProgress(final double progress, final String status) {
-                System.out.println("Progress: " + progress + " - " + status);
+                //System.out.println("Progress: " + progress + " - " + status);
                 Platform.runLater(() -> updateStatus(status, null, progress));
             }
 

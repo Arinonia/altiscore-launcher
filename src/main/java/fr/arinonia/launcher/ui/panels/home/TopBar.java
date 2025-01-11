@@ -65,11 +65,24 @@ public class TopBar extends HBox {
 
     private Node createAccountSection() {
         final Account account = this.homePanel.getPanelManager().getLauncher().getSelectedAccount();
-        if (account == null) {
-            return createAuthButton();
-        } else {
-            return createAccountInfo(account);
-        }
+        final HBox container = new HBox(10.0D);
+        container.setAlignment(Pos.CENTER);
+
+        final CustomButton settingsButton = new CustomButton("⚙");
+        settingsButton.setStyle("-fx-background-color: transparent; -fx-text-fill: rgb(180, 180, 180); -fx-font-size: 18px;");
+        settingsButton.setOnMouseEntered(e ->
+                settingsButton.setStyle("-fx-background-color: rgba(180, 180, 180, 0.2); -fx-text-fill: white; -fx-font-size: 18px;")
+        );
+        settingsButton.setOnMouseExited(e ->
+                settingsButton.setStyle("-fx-background-color: transparent; -fx-text-fill: rgb(180, 180, 180); -fx-font-size: 18px;")
+        );
+        settingsButton.setOnAction(e -> {
+            //! Open settings
+        });
+
+        final Node mainSection = account == null ? createAuthButton() : createAccountInfo(account);
+        container.getChildren().addAll(settingsButton, mainSection);
+        return container;
     }
 
     private CustomButton createAuthButton() {

@@ -3,6 +3,7 @@ package fr.arinonia.launcher.api.models;
 public class Server {
     private final String name;
     private final String host;
+    //list model for server
 
     public Server(final String name, final String host) {
         this.name = name;

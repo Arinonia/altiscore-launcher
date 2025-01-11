@@ -8,7 +8,7 @@ public class News {
     private final String content;
     private final String imageUrl;
     private final String author;
-    private final NewsType type;
+    private final String type;
     private final String createdAt;
     private final boolean important;
 
@@ -19,7 +19,7 @@ public class News {
         this.content = content;
         this.imageUrl = imageUrl;
         this.author = author;
-        this.type = NewsType.fromValue(type);
+        this.type = type;
         this.createdAt = createdAt;
         this.important = important;
     }
@@ -45,7 +45,7 @@ public class News {
     }
 
     public NewsType getType() {
-        return this.type;
+        return NewsType.fromValue(this.type);
     }
 
     public String getCreatedAt() {
@@ -70,6 +70,20 @@ public class News {
     @Override
     public int hashCode() {
         return Objects.hash(this.id);
+    }
+
+    @Override
+    public String toString() {
+        return "News{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", author='" + author + '\'' +
+                ", type=" + type +
+                ", createdAt='" + createdAt + '\'' +
+                ", important=" + important +
+                '}';
     }
 
     public enum NewsType {
@@ -98,7 +112,7 @@ public class News {
 
         public static NewsType fromValue(final String value) {
             for (final NewsType type : values()) {
-                if (type.getValue().equals(value)) {
+                if (type.getValue().equalsIgnoreCase(value)) {
                     return type;
                 }
             }

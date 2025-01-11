@@ -1,10 +1,12 @@
 package fr.arinonia.launcher;
 
+import fr.arinonia.launcher.api.models.News;
 import fr.arinonia.launcher.auth.AuthenticationManager;
 import fr.arinonia.launcher.config.AuthConfigManager;
 import fr.arinonia.launcher.config.models.Account;
 import fr.arinonia.launcher.file.FileManager;
 import fr.arinonia.launcher.loader.LauncherLoader;
+import fr.arinonia.launcher.loader.NewsLoader;
 import fr.arinonia.launcher.ui.PanelManager;
 import fr.arinonia.launcher.ui.panels.home.HomePanel;
 import fr.arinonia.launcher.ui.panels.loading.LoadingPanel;
@@ -12,6 +14,8 @@ import fr.arinonia.launcher.ui.panels.loading.LoadingPanel;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class Launcher {
 
@@ -49,6 +53,9 @@ public class Launcher {
         this.selectedAccount = selectedAccount;
     }
 
+    public List<News> getNews() {
+        return this.launcherLoader.getComponent(NewsLoader.class).getNews();
+    }
     public Account getSelectedAccount() {
         return this.selectedAccount;
     }
@@ -60,4 +67,5 @@ public class Launcher {
     public LauncherLoader getLauncherLoader() {
         return this.launcherLoader;
     }
+
 }

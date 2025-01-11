@@ -22,7 +22,6 @@ public class NewsLoader extends LoadableComponent {
             this.news.clear();
             this.news.addAll(newsResponse);
             LOGGER.info("Loaded {} news items", newsResponse.size());
-
         });
     }
 

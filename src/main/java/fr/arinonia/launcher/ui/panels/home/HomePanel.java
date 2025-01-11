@@ -34,9 +34,9 @@ public class HomePanel extends AbstractPanel {
         final VBox serversSection = createServersSection();
         HBox.setHgrow(serversSection, Priority.ALWAYS);
 
-        final SettingsSection settingsSection = new SettingsSection();
+        final NewsSection newsSection = new NewsSection(this.panelManager.getLauncher());
 
-        contentContainer.getChildren().addAll(serversSection, settingsSection);
+        contentContainer.getChildren().addAll(serversSection, newsSection);
         return contentContainer;
     }
 
