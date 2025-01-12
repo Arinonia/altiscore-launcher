@@ -1,9 +1,10 @@
-package fr.arinonia.launcher.ui.panels.home;
+package fr.arinonia.launcher.ui.components.card;
 
 import fr.arinonia.launcher.api.models.Server;
 import fr.arinonia.launcher.config.models.Account;
 import fr.arinonia.launcher.minecraft.MinecraftServerPing;
 import fr.arinonia.launcher.ui.components.CustomButton;
+import fr.arinonia.launcher.ui.panels.home.HomePanel;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.geometry.Insets;

@@ -2,6 +2,8 @@ package fr.arinonia.launcher.ui.panels.loading;
 
 import fr.arinonia.launcher.ui.AbstractPanel;
 
+import fr.arinonia.launcher.ui.components.loading.LoadingAnimation;
+import fr.arinonia.launcher.ui.components.loading.LoadingProgressBar;
 import fr.arinonia.launcher.ui.panels.home.HomePanel;
 import fr.arinonia.launcher.utils.CallBack;
 import fr.arinonia.launcher.utils.Constants;

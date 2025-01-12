@@ -1,4 +1,4 @@
-package fr.arinonia.launcher.ui.components;
+package fr.arinonia.launcher.ui.components.card;
 
 import fr.arinonia.launcher.api.models.News;
 import javafx.geometry.Insets;

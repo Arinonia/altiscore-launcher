@@ -2,6 +2,7 @@ package fr.arinonia.launcher.ui.panels.home;
 
 import fr.arinonia.launcher.api.models.Server;
 import fr.arinonia.launcher.ui.AbstractPanel;
+import fr.arinonia.launcher.ui.components.card.ServerItem;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;

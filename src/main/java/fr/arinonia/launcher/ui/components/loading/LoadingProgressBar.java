@@ -1,4 +1,4 @@
-package fr.arinonia.launcher.ui.panels.loading;
+package fr.arinonia.launcher.ui.components.loading;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
