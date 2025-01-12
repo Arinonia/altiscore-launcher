@@ -20,6 +20,9 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.5.15")
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.github.Litarvan:OpenAuth:1.1.6")
+
+    //added after the last bootstrap update
+    implementation("fr.flowarg:flowupdater:1.9.2")
 }
 
 application {

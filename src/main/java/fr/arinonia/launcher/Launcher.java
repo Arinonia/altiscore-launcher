@@ -1,12 +1,14 @@
 package fr.arinonia.launcher;
 
 import fr.arinonia.launcher.api.models.News;
+import fr.arinonia.launcher.api.models.Server;
 import fr.arinonia.launcher.auth.AuthenticationManager;
 import fr.arinonia.launcher.config.AuthConfigManager;
 import fr.arinonia.launcher.config.models.Account;
 import fr.arinonia.launcher.file.FileManager;
 import fr.arinonia.launcher.loader.LauncherLoader;
 import fr.arinonia.launcher.loader.NewsLoader;
+import fr.arinonia.launcher.loader.ServerLoader;
 import fr.arinonia.launcher.ui.PanelManager;
 import fr.arinonia.launcher.ui.panels.home.HomePanel;
 import fr.arinonia.launcher.ui.panels.loading.LoadingPanel;
@@ -38,7 +40,7 @@ public class Launcher {
         this.launcherLoader = new LauncherLoader(this);
         this.panelManager = new PanelManager(this);
         this.panelManager.init(stage);
-        //TODO show home panel
+
         this.panelManager.addPanel(new LoadingPanel());
         this.panelManager.addPanel(new HomePanel());
         this.panelManager.showPanel(LoadingPanel.class);
@@ -56,6 +58,11 @@ public class Launcher {
     public List<News> getNews() {
         return this.launcherLoader.getComponent(NewsLoader.class).getNews();
     }
+
+    public List<Server> getServers() {
+        return this.launcherLoader.getComponent(ServerLoader.class).getServers();
+    }
+
     public Account getSelectedAccount() {
         return this.selectedAccount;
     }

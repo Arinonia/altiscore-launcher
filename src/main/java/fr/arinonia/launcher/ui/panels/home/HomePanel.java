@@ -1,5 +1,6 @@
 package fr.arinonia.launcher.ui.panels.home;
 
+import fr.arinonia.launcher.api.models.Server;
 import fr.arinonia.launcher.ui.AbstractPanel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -62,12 +63,9 @@ public class HomePanel extends AbstractPanel {
     }
 
     private void initializeServers() {
-        this.serversContainer.getChildren().addAll(
-                new ServerItem(this, "Altis Life", "1.20.1", true, 145, 200),
-                new ServerItem(this, "SkyBlock", "1.20.1", true, 87, 100),
-                new ServerItem(this, "Prison", "1.20.2", false, 0, 150),
-                new ServerItem(this, "Creative", "1.20.1", true, 23, 50),
-                new ServerItem(this, "Survie", "1.20.1", true, 56, 100)
-                );
+        this.serversContainer.getChildren().clear();
+        for (final Server server : this.panelManager.getLauncher().getServers()) {
+            this.serversContainer.getChildren().add(new ServerItem(this, server));
+        }
     }
 }
