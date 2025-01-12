@@ -36,6 +36,7 @@ public class AuthenticationManager {
             LOGGER.error("Failed to authenticate with Microsoft", e);
             //! we need the notification system for that
             //callBack.onError(e, "Failed to authenticate with Microsoft");
+            callBack.onError("Failed to authenticate with Microsoft");
             return null;
         });
     }

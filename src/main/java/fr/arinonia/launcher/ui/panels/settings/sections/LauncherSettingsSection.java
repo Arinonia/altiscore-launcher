@@ -19,7 +19,6 @@ public class LauncherSettingsSection extends VBox {
         final Label sectionTitle = new Label("Paramètres du Launcher");
         sectionTitle.setStyle("-fx-text-fill: white; -fx-font-size: 18px; -fx-font-family: 'Bahnschrift'; -fx-font-weight: bold;");
 
-        // Thème sombre/clair
         final ToggleGroup themeGroup = new ToggleGroup();
         final HBox themeBox = new HBox(10);
 
@@ -34,7 +33,6 @@ public class LauncherSettingsSection extends VBox {
 
         themeBox.getChildren().addAll(darkTheme, lightTheme);
 
-        // Dossier d'installation
         final TextField installPathField = new TextField();
         installPathField.setEditable(false);
         installPathField.setPrefWidth(300);
@@ -58,8 +56,8 @@ public class LauncherSettingsSection extends VBox {
                 pathBox
         );
         installPathItem.setEnabled(false);
-        installPathItem.setWarning("Ce paramètre n'est pas disponible car c kompliké lol");
-        // Options supplémentaires
+        installPathItem.setWarning("Ce paramètre n'est pas disponible et il ne le sera jamais lol");
+
         final CheckBox closeOnLaunchCheckbox = new CheckBox();
         closeOnLaunchCheckbox.setStyle("-fx-text-fill: white;");
 
@@ -69,11 +67,23 @@ public class LauncherSettingsSection extends VBox {
                 closeOnLaunchCheckbox
         );
 
+        //choose the lang
+        final ComboBox<String> langBox = new ComboBox<>();
+        langBox.getItems().addAll("Français", "English");
+        langBox.setValue("Français");
+
+        final SettingsItem langItem = new SettingsItem(
+                "Langue",
+                "Choisissez la langue du launcher",
+                langBox
+        );
+
         this.getChildren().addAll(
                 sectionTitle,
                 themeItem,
                 installPathItem,
-                closeOnLaunchItem
+                closeOnLaunchItem,
+                langItem
         );
     }
 }

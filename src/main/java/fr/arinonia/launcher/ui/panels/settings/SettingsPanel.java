@@ -2,6 +2,7 @@ package fr.arinonia.launcher.ui.panels.settings;
 
 import fr.arinonia.launcher.ui.AbstractPanel;
 import fr.arinonia.launcher.ui.components.CustomButton;
+import fr.arinonia.launcher.ui.panels.home.HomePanel;
 import fr.arinonia.launcher.ui.panels.settings.sections.AccountSettingsSection;
 import fr.arinonia.launcher.ui.panels.settings.sections.LauncherSettingsSection;
 import javafx.geometry.Insets;
@@ -10,13 +11,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class SettingsPanel extends AbstractPanel {
     private VBox settingsContainer;
     private String currentCategory = "Compte";
-    private final Map<String, CustomButton> categoryButtons = new HashMap<>();
 
     @Override
     public void onShow() {
@@ -50,7 +48,7 @@ public class SettingsPanel extends AbstractPanel {
         initializePanel();
     }
 
-    private void setupTopBar(VBox mainContainer) {
+    private void setupTopBar(final VBox mainContainer) {
         final HBox topBar = new HBox(15);
         topBar.setAlignment(Pos.CENTER_LEFT);
         topBar.setPadding(new Insets(10, 15, 10, 15));
@@ -63,21 +61,19 @@ public class SettingsPanel extends AbstractPanel {
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         final CustomButton backButton = new CustomButton("Retour");
-        backButton.setOnAction(e -> this.getPanelManager().showPanel(fr.arinonia.launcher.ui.panels.home.HomePanel.class));
+        backButton.setOnAction(e -> this.getPanelManager().showPanel(HomePanel.class));
 
         topBar.getChildren().addAll(titleLabel, spacer, backButton);
         mainContainer.getChildren().add(topBar);
     }
 
-    private void setupContent(VBox mainContainer) {
+    private void setupContent(final VBox mainContainer) {
         final HBox contentContainer = new HBox(20);
         contentContainer.setAlignment(Pos.TOP_CENTER);
         VBox.setVgrow(contentContainer, Priority.ALWAYS);
 
-        // Left side - Categories
         final VBox categoriesSection = createCategoriesSection();
 
-        // Right side - Settings content
         final VBox settingsSection = createSettingsSection();
         HBox.setHgrow(settingsSection, Priority.ALWAYS);
 
@@ -104,16 +100,15 @@ public class SettingsPanel extends AbstractPanel {
                 showSettingsSection(category);
                 updateCategoryButtons(categoriesSection);
             });
-            this.categoryButtons.put(category, categoryButton);
             categoriesSection.getChildren().add(categoryButton);
         }
 
         return categoriesSection;
     }
 
-    private void updateCategoryButtons(VBox categoriesSection) {
+    private void updateCategoryButtons(final VBox categoriesSection) {
         categoriesSection.getChildren().forEach(node -> {
-            if (node instanceof CustomButton button) {
+            if (node instanceof final CustomButton button) {
                 button.setDisable(button.getText().equals(this.currentCategory));
             }
         });
@@ -140,7 +135,7 @@ public class SettingsPanel extends AbstractPanel {
         return settingsSection;
     }
 
-    private void showSettingsSection(String category) {
+    private void showSettingsSection(final String category) {
         this.settingsContainer.getChildren().clear();
 
         switch (category) {
@@ -158,8 +153,23 @@ public class SettingsPanel extends AbstractPanel {
     }
 
     private void showComingSoon() {
-        final Label comingSoonLabel = new Label("Cette section sera bientôt disponible");
-        comingSoonLabel.setStyle("-fx-text-fill: rgb(180, 180, 180); -fx-font-size: 14px; -fx-font-family: 'Bahnschrift';");
-        this.settingsContainer.getChildren().add(comingSoonLabel);
+        final VBox comingSoonContainer = new VBox(15);
+        comingSoonContainer.setAlignment(Pos.CENTER);
+        comingSoonContainer.setPadding(new Insets(40));
+        comingSoonContainer.setStyle("-fx-background-color: rgba(149, 128, 255, 0.1); -fx-background-radius: 10;");
+
+        final Label emojiLabel = new Label("🚧");
+        emojiLabel.setStyle("-fx-font-size: 48px;");
+
+        final Label titleLabel = new Label("En développement");
+        titleLabel.setStyle("-fx-text-fill: white; -fx-font-size: 24px; -fx-font-family: 'Bahnschrift'; -fx-font-weight: bold;");
+
+        final Label descriptionLabel = new Label("Cette section est actuellement en cours de développement et sera disponible dans une prochaine mise à jour.");
+        descriptionLabel.setStyle("-fx-text-fill: rgb(180, 180, 180); -fx-font-size: 14px; -fx-font-family: 'Bahnschrift';");
+        descriptionLabel.setWrapText(true);
+        descriptionLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+
+        comingSoonContainer.getChildren().addAll(emojiLabel, titleLabel, descriptionLabel);
+        this.settingsContainer.getChildren().add(comingSoonContainer);
     }
 }
