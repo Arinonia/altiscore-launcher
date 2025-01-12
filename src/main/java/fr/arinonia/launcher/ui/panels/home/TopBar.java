@@ -2,6 +2,7 @@ package fr.arinonia.launcher.ui.panels.home;
 
 import fr.arinonia.launcher.config.models.Account;
 import fr.arinonia.launcher.ui.components.CustomButton;
+import fr.arinonia.launcher.ui.panels.settings.SettingsPanel;
 import fr.arinonia.launcher.utils.CallBack;
 import fr.arinonia.launcher.utils.Constants;
 import javafx.application.Platform;
@@ -77,7 +78,7 @@ public class TopBar extends HBox {
                 settingsButton.setStyle("-fx-background-color: transparent; -fx-text-fill: rgb(180, 180, 180); -fx-font-size: 18px;")
         );
         settingsButton.setOnAction(e -> {
-            //! Open settings
+            homePanel.getPanelManager().showPanel(SettingsPanel.class);
         });
 
         final Node mainSection = account == null ? createAuthButton() : createAccountInfo(account);

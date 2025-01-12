@@ -31,6 +31,11 @@ public class AuthConfigManager {
             if (Files.exists(this.fileManager.getAuthConfigPath())) {
                 final String json = Files.readString(this.fileManager.getAuthConfigPath());
                 this.authConfig = GSON.fromJson(json, AuthConfig.class);
+
+                if (this.authConfig == null) {
+                    LOGGER.warn("Auth config was null after loading, creating new one");
+                    this.authConfig = new AuthConfig();
+                }
                 LOGGER.info("Auth config loaded");
             } else {
                 LOGGER.info("Auth config not found, creating a new one");
@@ -94,6 +99,18 @@ public class AuthConfigManager {
                 .filter(account -> account.getUuid().equals(this.authConfig.getSelectedAccount()))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public void logout(final String uuid) {
+        LOGGER.info("Logging out account: {}", uuid);
+        this.authConfig.getAccounts().removeIf(account -> account.getUuid().equals(uuid));
+
+        if (this.authConfig.getSelectedAccount() != null && this.authConfig.getSelectedAccount().equals(uuid)) {
+            this.authConfig.setSelectedAccount(null);
+        }
+
+        save();
+        LOGGER.info("Account successfully logged out");
     }
 
     public List<Account> getAccounts() {

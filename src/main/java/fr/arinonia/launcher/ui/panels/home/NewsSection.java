@@ -2,7 +2,7 @@ package fr.arinonia.launcher.ui.panels.home;
 
 import fr.arinonia.launcher.Launcher;
 import fr.arinonia.launcher.api.models.News;
-import fr.arinonia.launcher.ui.components.card.NewsCard;
+import fr.arinonia.launcher.ui.components.home.NewsCard;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;

@@ -30,7 +30,11 @@ A modern and sleek Minecraft launcher built with JavaFX, designed specifically f
 ![Home Panel](screenshots/home.png)
 
 ### Settings Panel
-![Settings Panel](https://placehold.co/800x400?text=Todo)
+
+#### Account Settings
+![Settings Account Panel](screenshots/settings_account.png)
+#### Launcher Settings
+![Settings Launcher Panel](screenshots/settings_launcher.png)
 
 </details>
 

@@ -13,6 +13,7 @@ import fr.arinonia.launcher.ui.PanelManager;
 import fr.arinonia.launcher.ui.panels.home.HomePanel;
 import fr.arinonia.launcher.ui.panels.loading.LoadingPanel;
 
+import fr.arinonia.launcher.ui.panels.settings.SettingsPanel;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +44,7 @@ public class Launcher {
 
         this.panelManager.addPanel(new LoadingPanel());
         this.panelManager.addPanel(new HomePanel());
+        this.panelManager.addPanel(new SettingsPanel());
         this.panelManager.showPanel(LoadingPanel.class);
     }
 

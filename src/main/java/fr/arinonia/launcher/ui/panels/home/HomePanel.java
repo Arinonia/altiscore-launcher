@@ -2,7 +2,7 @@ package fr.arinonia.launcher.ui.panels.home;
 
 import fr.arinonia.launcher.api.models.Server;
 import fr.arinonia.launcher.ui.AbstractPanel;
-import fr.arinonia.launcher.ui.components.card.ServerItem;
+import fr.arinonia.launcher.ui.components.home.ServerItem;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -15,6 +15,10 @@ public class HomePanel extends AbstractPanel {
     //! Add a way to go discord
     @Override
     protected void setupPanel() {
+        initializePanel();
+    }
+
+    private void initializePanel() {
         this.layout.setStyle("-fx-background-color: linear-gradient(to bottom right, rgb(36, 17, 70), rgb(48, 25, 88));");
         final VBox mainContainer = new VBox(10);
         this.setPriority(mainContainer);
@@ -69,4 +73,12 @@ public class HomePanel extends AbstractPanel {
             this.serversContainer.getChildren().add(new ServerItem(this, server));
         }
     }
+
+    @Override
+    public void onHide() {
+        super.onHide();
+        this.layout.getChildren().clear();
+    }
+
+
 }
