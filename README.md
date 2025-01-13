@@ -18,6 +18,17 @@ A modern and sleek Minecraft launcher built with JavaFX, designed specifically f
 - **Settings Customization**: Flexible options for Java runtime and memory allocation
 - **Multi-Server Support**: Connect to various game modes and events seamlessly
 
+## 📝 Project Status & Roadmap
+
+Check out our [ROADMAP.md](ROADMAP.md) file for detailed information about:
+- ✅ Completed features
+- 🚧 Work in progress
+- 📋 Planned features
+- 🐛 Known issues
+- 💡 Future improvements
+
+
+
 ## 🖼️ Screenshots
 
 <details>

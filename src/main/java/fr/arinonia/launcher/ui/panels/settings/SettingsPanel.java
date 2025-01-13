@@ -11,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 
-
 public class SettingsPanel extends AbstractPanel {
     private VBox settingsContainer;
     private String currentCategory = "Compte";
