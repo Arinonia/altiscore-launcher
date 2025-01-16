@@ -78,7 +78,7 @@ public class NewsCard extends VBox {
         final Label dateLabel = new Label(this.createdAt);
         dateLabel.setStyle("-fx-text-fill: rgb(149, 128, 255); -fx-font-size: 11px; -fx-font-family: 'Bahnschrift';");
 
-        final Label typeLabel = new Label(this.type.toString());
+        final Label typeLabel = new Label(this.type.getDisplayName());
         typeLabel.setStyle("-fx-text-fill: " + getTypeColor() + "; -fx-font-size: 11px; -fx-font-family: 'Bahnschrift';");
 
         metaInfo.getChildren().addAll(authorLabel, dateLabel, typeLabel);
