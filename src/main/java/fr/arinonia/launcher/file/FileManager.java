@@ -53,4 +53,8 @@ public class FileManager {
     public Path getAuthConfigPath() {
         return this.launcherPath.resolve("auth.json");
     }
+
+    public Path getRootPath() {
+        return this.rootPath;
+    }
 }
