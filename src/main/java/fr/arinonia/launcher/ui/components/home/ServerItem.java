@@ -1,10 +1,10 @@
 package fr.arinonia.launcher.ui.components.home;
 
+import fr.arinonia.launcher.Launcher;
 import fr.arinonia.launcher.api.models.Server;
 import fr.arinonia.launcher.config.models.Account;
 import fr.arinonia.launcher.minecraft.MinecraftServerPing;
 import fr.arinonia.launcher.ui.components.CustomButton;
-import fr.arinonia.launcher.ui.panels.home.HomePanel;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -25,10 +25,14 @@ public class ServerItem extends HBox {
     private MinecraftServerPing.ServerStatus serverStatus;
     private final CustomButton joinButton;
     private final Account account;
+    private final Launcher launcher;
 
-    public ServerItem(final HomePanel homePanel, final Server server) {
+    public ServerItem(final Launcher launcher, final Server server) {
         super(15);
+        this.launcher = launcher;
         this.server = server;
+        this.account = launcher.getSelectedAccount();
+
         this.setPadding(new Insets(15));
         this.setAlignment(Pos.CENTER_LEFT);
         this.setStyle(BASE_STYLE);
@@ -36,8 +40,7 @@ public class ServerItem extends HBox {
 
         final StackPane iconPlaceholder = createServerIcon();
         final VBox serverInfo = createServerInfo();
-        this.account = homePanel.getPanelManager().getLauncher().getSelectedAccount();
-        this.joinButton = createJoinButton(this.account != null); //! maybe set to false as default then update and check if account is null
+        this.joinButton = createJoinButton(this.account != null);
 
         this.getChildren().addAll(iconPlaceholder, serverInfo, joinButton);
 

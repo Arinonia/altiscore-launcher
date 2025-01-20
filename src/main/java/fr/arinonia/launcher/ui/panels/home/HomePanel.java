@@ -1,18 +1,20 @@
 package fr.arinonia.launcher.ui.panels.home;
 
-import fr.arinonia.launcher.api.models.Server;
 import fr.arinonia.launcher.ui.AbstractPanel;
-import fr.arinonia.launcher.ui.components.home.ServerItem;
+import fr.arinonia.launcher.ui.components.home.Sidebar;
+import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
 
 public class HomePanel extends AbstractPanel {
-    private VBox serversContainer;
+    private VBox mainContainer;
+    private HBox contentContainer;
+    private VBox contentSection;
+    private Sidebar sidebar;
+    private Sidebar.SidebarSection currentSection;
+    private TopBar topBar;
 
-    //! Add a way to go discord
     @Override
     protected void setupPanel() {
         initializePanel();
@@ -20,57 +22,73 @@ public class HomePanel extends AbstractPanel {
 
     private void initializePanel() {
         this.layout.setStyle("-fx-background-color: linear-gradient(to bottom right, rgb(36, 17, 70), rgb(48, 25, 88));");
-        final VBox mainContainer = new VBox(10);
-        this.setPriority(mainContainer);
-        mainContainer.setPadding(new Insets(20));
 
-        final TopBar topBar = new TopBar(this);
-        final HBox contentContainer = createContentContainer();
+        this.mainContainer = new VBox(10.0D);
+        this.setPriority(this.mainContainer);
+        this.mainContainer.setPadding(new Insets(20.0D));
 
-        mainContainer.getChildren().addAll(topBar, contentContainer);
-        VBox.setVgrow(contentContainer, Priority.ALWAYS);
+        this.topBar = new TopBar(this);
 
-        this.layout.getChildren().add(mainContainer);
+        this.contentContainer = new HBox(20.0D);
+        VBox.setVgrow(this.contentContainer, Priority.ALWAYS);
+
+        this.sidebar = new Sidebar(this::handleSectionChange);
+
+        this.contentSection = new VBox(0.0D);
+        this.contentSection.setFillWidth(true);
+        HBox.setHgrow(this.contentSection, Priority.ALWAYS);
+        VBox.setVgrow(this.contentSection, Priority.ALWAYS);
+
+        this.contentContainer.getChildren().addAll(this.sidebar, this.contentSection);
+        this.mainContainer.getChildren().addAll(this.topBar, this.contentContainer);
+        this.layout.getChildren().add(this.mainContainer);
+
+        this.currentSection = Sidebar.SidebarSection.SERVERS;
+        updateContent(Sidebar.SidebarSection.SERVERS);
     }
 
-    private HBox createContentContainer() {
-        final HBox contentContainer = new HBox(20);
-        contentContainer.setAlignment(Pos.CENTER);
+    private void updateContent(final Sidebar.SidebarSection section) {
+        this.contentSection.getChildren().clear();
+        Region content = null;
 
-        final VBox serversSection = createServersSection();
-        HBox.setHgrow(serversSection, Priority.ALWAYS);
+        switch (section) {
+            case SERVERS -> {
+                content = new ServersPanel(this.panelManager.getLauncher());
+            }
+            case PARTNERS -> {
+                content = new PartnersPanel(this.panelManager.getLauncher());
+            }
+            case MY_SERVERS -> {
+                content = new MyServersPanel(this.panelManager.getLauncher());
+            }
+            case PROFILES -> {
+                content = new ProfilesPanel(this.panelManager.getLauncher());
+            }
+        }
 
-        final NewsSection newsSection = new NewsSection(this.panelManager.getLauncher());
-
-        contentContainer.getChildren().addAll(serversSection, newsSection);
-        return contentContainer;
+        if (content != null) {
+            VBox.setVgrow(content, Priority.ALWAYS);
+            this.contentSection.getChildren().add(content);
+        }
     }
 
-    private VBox createServersSection() {
-        final VBox serversSection = new VBox(15);
-        serversSection.setPadding(new Insets(20));
-        serversSection.setStyle("-fx-background-color: rgba(0, 0, 0, 0.3); -fx-background-radius: 15;");
+    private void handleSectionChange(final Sidebar.SidebarSection newSection) {
+        if (this.currentSection != newSection) {
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(150.0D), this.contentSection);
+            fadeOut.setFromValue(1.0);
+            fadeOut.setToValue(0.0);
 
-        final Label serversTitle = new Label("Serveurs disponibles");
-        serversTitle.setStyle("-fx-text-fill: white; -fx-font-size: 24px; -fx-font-family: 'Bahnschrift'; -fx-font-weight: bold;");
+            fadeOut.setOnFinished(e -> {
+                updateContent(newSection);
 
-        this.serversContainer = new VBox(10);
-        final ScrollPane scrollPane = new ScrollPane(this.serversContainer);
-        scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;");
-        scrollPane.setFitToWidth(true);
+                FadeTransition fadeIn = new FadeTransition(Duration.millis(150), this.contentSection);
+                fadeIn.setFromValue(0.0D);
+                fadeIn.setToValue(1.0D);
+                fadeIn.play();
+            });
 
-        initializeServers();
-
-        serversSection.getChildren().addAll(serversTitle, scrollPane);
-        VBox.setVgrow(scrollPane, Priority.ALWAYS);
-
-        return serversSection;
-    }
-
-    private void initializeServers() {
-        this.serversContainer.getChildren().clear();
-        for (final Server server : this.panelManager.getLauncher().getServers()) {
-            this.serversContainer.getChildren().add(new ServerItem(this, server));
+            fadeOut.play();
+            this.currentSection = newSection;
         }
     }
 
@@ -80,5 +98,7 @@ public class HomePanel extends AbstractPanel {
         this.layout.getChildren().clear();
     }
 
-
+    public TopBar getTopBar() {
+        return this.topBar;
+    }
 }
