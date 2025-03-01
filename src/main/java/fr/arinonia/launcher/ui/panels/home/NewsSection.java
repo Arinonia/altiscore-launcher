@@ -31,10 +31,7 @@ public class NewsSection extends VBox {
         final VBox newsContainer = new VBox(10);
         newsContainer.setAlignment(Pos.TOP_LEFT);
         newsContainer.setPadding(new Insets(0, 20, 15, 15));
-        newsContainer.setStyle("-fx-background-insets: 0 10 0 0;"); // Ajoute une marge à droite
-
-
-        //newsContainer.getChildren().addAll(createNews());
+        newsContainer.setStyle("-fx-background-insets: 0 10 0 0;"); //right padding
 
         final VBox contentBox = new VBox(10);
         contentBox.getChildren().addAll(newsTitle, newsContainer);

@@ -1,0 +1,52 @@
+.spinner {
+    -fx-background-color: rgba(149, 128, 255, 0.2);
+    -fx-background-radius: 5px;
+}
+
+.spinner .text-field {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-family: 'Bahnschrift';
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.5);
+    -fx-padding: 6px 10px;
+    -fx-background-radius: 0;
+}
+
+.spinner:focused .text-field {
+    -fx-background-color: rgba(149, 128, 255, 0.1);
+}
+
+.spinner .increment-arrow-button, .spinner .decrement-arrow-button {
+    -fx-background-color: rgba(149, 128, 255, 0.3);
+    -fx-padding: 4px 6px;
+}
+
+.spinner .increment-arrow-button {
+    -fx-background-radius: 0 5px 0 0;
+}
+
+.spinner .decrement-arrow-button {
+    -fx-background-radius: 0 0 5px 0;
+}
+
+.spinner .increment-arrow, .spinner .decrement-arrow {
+    -fx-background-color: white;
+    -fx-padding: 4px;
+}
+
+.spinner .increment-arrow-button:hover, .spinner .decrement-arrow-button:hover {
+    -fx-background-color: rgba(149, 128, 255, 0.5);
+}
+
+.spinner:hover {
+    -fx-background-color: rgba(149, 128, 255, 0.3);
+}
+
+.spinner:disabled {
+    -fx-opacity: 0.5;
+}
+
+.spinner:focused {
+    -fx-background-color: rgba(149, 128, 255, 0.3);
+}

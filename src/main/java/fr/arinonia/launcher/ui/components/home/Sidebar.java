@@ -1,5 +1,6 @@
 package fr.arinonia.launcher.ui.components.home;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -23,15 +24,15 @@ public class Sidebar extends VBox {
     }
 
     public enum SidebarSection {
-        SERVERS("Home", "🌐"),
-        PARTNERS("Serveurs partenaires", "🤝"),
-        MY_SERVERS("Mods", "⭐"),
-        PROFILES("Profils", "👤");
+        DASHBOARD("Home", FontAwesomeIcon.DASHBOARD),
+        SERVERS("Serveurs", FontAwesomeIcon.SERVER),
+        SHOP("Boutique", FontAwesomeIcon.DIAMOND),
+        PROFILES("Profils", FontAwesomeIcon.USER);
 
         private final String label;
-        private final String icon;
+        private final FontAwesomeIcon icon;
 
-        SidebarSection(final String label, final String icon) {
+        SidebarSection(final String label, final FontAwesomeIcon icon) {
             this.label = label;
             this.icon = icon;
         }
@@ -40,7 +41,7 @@ public class Sidebar extends VBox {
             return this.label;
         }
 
-        public String getIcon() {
+        public FontAwesomeIcon getIcon() {
             return this.icon;
         }
     }
@@ -70,7 +71,7 @@ public class Sidebar extends VBox {
 
     private void setupToggleButton() {
         final SidebarToggleButton toggleButton = new SidebarToggleButton(this::toggleExpanded);
-        this.getChildren().add(0, toggleButton);
+        this.getChildren().addFirst(toggleButton);
     }
 
     private void setupItems() {

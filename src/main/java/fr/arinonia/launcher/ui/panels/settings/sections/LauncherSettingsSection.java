@@ -1,6 +1,9 @@
 package fr.arinonia.launcher.ui.panels.settings.sections;
 
 import fr.arinonia.launcher.ui.components.CustomButton;
+import fr.arinonia.launcher.ui.components.CustomCheckBox;
+import fr.arinonia.launcher.ui.components.CustomComboBox;
+import fr.arinonia.launcher.ui.components.CustomRadioButton;
 import fr.arinonia.launcher.ui.components.settings.SettingsItem;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -22,12 +25,12 @@ public class LauncherSettingsSection extends VBox {
         final ToggleGroup themeGroup = new ToggleGroup();
         final HBox themeBox = new HBox(10);
 
-        final RadioButton darkTheme = new RadioButton("Sombre");
+        final CustomRadioButton darkTheme = new CustomRadioButton("Sombre");
         darkTheme.setToggleGroup(themeGroup);
         darkTheme.setSelected(true);
         darkTheme.setStyle("-fx-text-fill: white;");
 
-        final RadioButton lightTheme = new RadioButton("Clair");
+        final CustomRadioButton lightTheme = new CustomRadioButton("Clair");
         lightTheme.setToggleGroup(themeGroup);
         lightTheme.setStyle("-fx-text-fill: white;");
 
@@ -49,16 +52,16 @@ public class LauncherSettingsSection extends VBox {
                 themeBox
         );
         themeItem.setEnabled(false);
-        themeItem.setWarning("Ce paramètre n'est pas disponible car c kompliké lol");
+        themeItem.setWarning("W.I.P");
         final SettingsItem installPathItem = new SettingsItem(
                 "Dossier d'installation",
                 "Emplacement des fichiers du jeu",
                 pathBox
         );
         installPathItem.setEnabled(false);
-        installPathItem.setWarning("Ce paramètre n'est pas disponible et il ne le sera jamais lol");
+        installPathItem.setWarning("W.I.P");
 
-        final CheckBox closeOnLaunchCheckbox = new CheckBox();
+        final CustomCheckBox closeOnLaunchCheckbox = new CustomCheckBox();
         closeOnLaunchCheckbox.setStyle("-fx-text-fill: white;");
 
         final SettingsItem closeOnLaunchItem = new SettingsItem(
@@ -67,8 +70,8 @@ public class LauncherSettingsSection extends VBox {
                 closeOnLaunchCheckbox
         );
 
-        //choose the lang
-        final ComboBox<String> langBox = new ComboBox<>();
+
+        final CustomComboBox<String> langBox = new CustomComboBox<>();
         langBox.getItems().addAll("Français", "English");
         langBox.setValue("Français");
 

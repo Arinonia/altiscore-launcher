@@ -29,7 +29,6 @@ public class AccountSettingsSection extends VBox {
         final Label sectionTitle = new Label("Paramètres du Compte");
         sectionTitle.setStyle("-fx-text-fill: white; -fx-font-size: 18px; -fx-font-family: 'Bahnschrift'; -fx-font-weight: bold;");
 
-        // Compte actif
         final Account selectedAccount = this.launcher.getSelectedAccount();
         if (selectedAccount != null) {
             this.getChildren().addAll(

@@ -1,13 +1,15 @@
 package fr.arinonia.launcher.ui.components.home;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.RotateTransition;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class SidebarToggleButton extends StackPane {
-    private final Label arrowLabel;
+    private final FontAwesomeIconView iconView;
     private boolean isExpanded = true;
     private final Runnable onToggle;
 
@@ -23,10 +25,11 @@ public class SidebarToggleButton extends StackPane {
                 -fx-cursor: hand;
                 """);
 
-        this.arrowLabel = new Label("⮜");
-        this.arrowLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
+        this.iconView = new FontAwesomeIconView(FontAwesomeIcon.CHEVRON_LEFT);
+        this.iconView.setGlyphSize(14);
+        this.iconView.setFill(Color.WHITE);
 
-        this.getChildren().add(this.arrowLabel);
+        this.getChildren().add(this.iconView);
 
         setupInteractions();
     }
@@ -44,11 +47,11 @@ public class SidebarToggleButton extends StackPane {
     }
 
     private void toggle() {
-        final RotateTransition rotation = new RotateTransition(Duration.millis(250.0D), this.arrowLabel);
+        final RotateTransition rotation = new RotateTransition(Duration.millis(250.0D), this.iconView);
         rotation.setByAngle(180);
         rotation.setOnFinished(e -> {
             this.isExpanded = !this.isExpanded;
-            this.arrowLabel.setRotate(this.isExpanded ? 0.0D : 180.0D);
+            this.iconView.setIcon(this.isExpanded ? FontAwesomeIcon.CHEVRON_LEFT : FontAwesomeIcon.CHEVRON_RIGHT);
         });
         rotation.play();
 

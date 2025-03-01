@@ -1,0 +1,50 @@
+.combo-box {
+    -fx-background-color: rgba(149, 128, 255, 0.2);
+    -fx-background-radius: 5px;
+}
+
+.combo-box:hover {
+    -fx-background-color: rgba(149, 128, 255, 0.3);
+}
+
+.combo-box:showing {
+    -fx-background-color: rgba(149, 128, 255, 0.4);
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.combo-box .arrow {
+    -fx-background-color: white;
+}
+
+.combo-box .list-view {
+    -fx-background-color: rgb(48, 25, 88);
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 5);
+}
+
+.combo-box .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-padding: 6 10;
+    -fx-font-family: 'Bahnschrift';
+}
+
+.combo-box .list-view .list-cell:hover {
+    -fx-background-color: rgba(149, 128, 255, 0.3);
+}
+
+.combo-box .list-view .list-cell:filled:selected {
+    -fx-background-color: rgb(149, 128, 255);
+}
+
+.combo-box .list-view .list-cell:filled:selected:hover {
+    -fx-background-color: rgb(149, 128, 255);
+}
+
+.combo-box:disabled {
+    -fx-opacity: 0.5;
+}

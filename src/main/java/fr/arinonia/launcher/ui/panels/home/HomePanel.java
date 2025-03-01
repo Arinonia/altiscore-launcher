@@ -2,6 +2,7 @@ package fr.arinonia.launcher.ui.panels.home;
 
 import fr.arinonia.launcher.ui.AbstractPanel;
 import fr.arinonia.launcher.ui.components.home.Sidebar;
+import fr.arinonia.launcher.ui.components.home.TopBar;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.scene.layout.*;
@@ -43,8 +44,8 @@ public class HomePanel extends AbstractPanel {
         this.mainContainer.getChildren().addAll(this.topBar, this.contentContainer);
         this.layout.getChildren().add(this.mainContainer);
 
-        this.currentSection = Sidebar.SidebarSection.SERVERS;
-        updateContent(Sidebar.SidebarSection.SERVERS);
+        this.currentSection = Sidebar.SidebarSection.DASHBOARD;
+        updateContent(Sidebar.SidebarSection.DASHBOARD);
     }
 
     private void updateContent(final Sidebar.SidebarSection section) {
@@ -52,15 +53,14 @@ public class HomePanel extends AbstractPanel {
         Region content = null;
 
         switch (section) {
+            case DASHBOARD -> {
+                content = new DashboardPanel(this.panelManager.getLauncher());
+            }
             case SERVERS -> {
                 content = new ServersPanel(this.panelManager.getLauncher());
             }
-            case PARTNERS -> {
-                content = new PartnersPanel(this.panelManager.getLauncher());
-            }
-            case MY_SERVERS -> {
-                content = new MyServersPanel(this.panelManager.getLauncher());
-            }
+            case SHOP -> {
+                content = new ShopPanel(this.panelManager.getLauncher());            }
             case PROFILES -> {
                 content = new ProfilesPanel(this.panelManager.getLauncher());
             }
@@ -74,14 +74,14 @@ public class HomePanel extends AbstractPanel {
 
     private void handleSectionChange(final Sidebar.SidebarSection newSection) {
         if (this.currentSection != newSection) {
-            FadeTransition fadeOut = new FadeTransition(Duration.millis(150.0D), this.contentSection);
+            final FadeTransition fadeOut = new FadeTransition(Duration.millis(150.0D), this.contentSection);
             fadeOut.setFromValue(1.0);
             fadeOut.setToValue(0.0);
 
             fadeOut.setOnFinished(e -> {
                 updateContent(newSection);
 
-                FadeTransition fadeIn = new FadeTransition(Duration.millis(150), this.contentSection);
+                final FadeTransition fadeIn = new FadeTransition(Duration.millis(150), this.contentSection);
                 fadeIn.setFromValue(0.0D);
                 fadeIn.setToValue(1.0D);
                 fadeIn.play();

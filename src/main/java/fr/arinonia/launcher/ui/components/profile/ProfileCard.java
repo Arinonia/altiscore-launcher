@@ -1,10 +1,11 @@
 package fr.arinonia.launcher.ui.components.profile;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.arinonia.launcher.ui.components.CustomButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -13,84 +14,94 @@ public class ProfileCard extends VBox {
     private static final String BASE_STYLE = "-fx-background-color: rgba(149, 128, 255, 0.1); -fx-background-radius: 10;";
     private static final String HOVER_STYLE = "-fx-background-color: rgba(149, 128, 255, 0.2); -fx-background-radius: 10;";
 
-    public ProfileCard(String name, String description, String modLoader, String version, boolean isDefault) {
-        this.setPrefWidth(300); // Augmenté pour accueillir plus d'informations
-        this.setMinHeight(200); // Augmenté pour accueillir plus d'informations
+    public ProfileCard(final String name, final String description, final String modLoader, final String version, final boolean isDefault) {
+        this.setPrefWidth(350);
+        this.setMinHeight(200);
         this.setPadding(new Insets(15));
         this.setSpacing(10);
         this.setStyle(BASE_STYLE);
         this.setCursor(javafx.scene.Cursor.HAND);
 
-        // Container principal pour diviser la carte en deux colonnes
-        HBox mainContainer = new HBox(15);
+        final HBox mainContainer = new HBox(15);
         mainContainer.setAlignment(Pos.TOP_CENTER);
 
-        // Colonne de gauche avec l'icône
-        VBox leftColumn = createLeftColumn(modLoader);
+        final VBox leftColumn = createLeftColumn(modLoader);
 
-        // Colonne de droite avec les informations
-        VBox rightColumn = new VBox(10);
+        final VBox rightColumn = new VBox(10);
         rightColumn.setAlignment(Pos.TOP_LEFT);
         HBox.setHgrow(rightColumn, Priority.ALWAYS);
 
-        // En-tête (titre + badges)
-        HBox header = createHeader(name, isDefault);
+        final HBox header = createHeader(name, isDefault);
 
-        // Description
-        Label descriptionLabel = createDescriptionLabel(description);
+        final Label descriptionLabel = createDescriptionLabel(description);
 
-        // Informations sur le profil
-        VBox profileInfo = createProfileInfo(modLoader, version);
+        final VBox profileInfo = createProfileInfo(modLoader, version);
 
-        // Stats du profil
-        HBox statsContainer = createStatsContainer();
+        final HBox statsContainer = createStatsContainer();
 
-        // Spacer
-        Region spacer = new Region();
+        final Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
 
-        // Boutons d'action
-        HBox actions = createActionButtons(isDefault);
+        final HBox actions = createActionButtons(isDefault);
 
         rightColumn.getChildren().addAll(header, descriptionLabel, profileInfo, statsContainer, spacer, actions);
         mainContainer.getChildren().addAll(leftColumn, rightColumn);
 
         this.getChildren().add(mainContainer);
 
-        // Effets de survol
         setupHoverEffects();
     }
 
-    private VBox createLeftColumn(String modLoader) {
-        VBox column = new VBox(10);
+    private VBox createLeftColumn(final String modLoader) {
+        final VBox column = new VBox(10);
         column.setAlignment(Pos.TOP_CENTER);
         column.setPrefWidth(64);
 
-        // Icône du ModLoader
-        ImageView modLoaderIcon = new ImageView();
-        modLoaderIcon.setFitWidth(48);
-        modLoaderIcon.setFitHeight(48);
-        // TODO: Charger l'icône appropriée selon le ModLoader
+        final FontAwesomeIconView modLoaderIcon = getModLoaderIcon(modLoader);
+        modLoaderIcon.setGlyphSize(36);
+        modLoaderIcon.setFill(Color.web("rgb(149, 128, 255)"));
 
-        // Statut du profil (point vert/rouge)
-        Circle statusDot = new Circle(4);
-        statusDot.setFill(Color.web("#44b700")); // Vert par défaut
+        final Circle statusDot = new Circle(4);
+        statusDot.setFill(Color.web("#44b700"));
 
-        Label statusLabel = new Label("Actif");
+        final Label statusLabel = new Label("Actif");
         statusLabel.setStyle("-fx-text-fill: #44b700; -fx-font-size: 12px; -fx-font-family: 'Bahnschrift';");
 
         column.getChildren().addAll(modLoaderIcon, statusDot, statusLabel);
         return column;
     }
 
-    private HBox createHeader(String name, boolean isDefault) {
-        HBox header = new HBox(10);
+    private FontAwesomeIconView getModLoaderIcon(final String modLoader) {
+        FontAwesomeIcon icon;
+
+        //! replace with better icons later
+        switch (modLoader.toLowerCase()) {
+            case "fabric":
+                icon = FontAwesomeIcon.SCISSORS;
+                break;
+            case "forge":
+                icon = FontAwesomeIcon.FIRE;
+                break;
+            case "neoforge":
+                icon = FontAwesomeIcon.FIRE_EXTINGUISHER;
+                break;
+            case "vanilla":
+            default:
+                icon = FontAwesomeIcon.CUBE;
+                break;
+        }
+
+        return new FontAwesomeIconView(icon);
+    }
+
+    private HBox createHeader(final String name, final boolean isDefault) {
+        final HBox header = new HBox(10);
         header.setAlignment(Pos.CENTER_LEFT);
 
-        Label nameLabel = new Label(name);
+        final Label nameLabel = new Label(name);
         nameLabel.setStyle("-fx-text-fill: white; -fx-font-size: 18px; -fx-font-family: 'Bahnschrift'; -fx-font-weight: bold;");
 
-        HBox badges = new HBox(5);
+        final HBox badges = new HBox(5);
         badges.setAlignment(Pos.CENTER_LEFT);
 
         if (isDefault) {
@@ -101,18 +112,18 @@ public class ProfileCard extends VBox {
         return header;
     }
 
-    private Label createDescriptionLabel(String description) {
-        Label descriptionLabel = new Label(description);
+    private Label createDescriptionLabel(final String description) {
+        final Label descriptionLabel = new Label(description);
         descriptionLabel.setStyle("-fx-text-fill: rgb(180, 180, 180); -fx-font-size: 14px; -fx-font-family: 'Bahnschrift';");
         descriptionLabel.setWrapText(true);
-        descriptionLabel.setMaxHeight(40); // Limite la hauteur de la description
+        descriptionLabel.setMaxHeight(40);
         return descriptionLabel;
     }
 
-    private VBox createProfileInfo(String modLoader, String version) {
-        VBox infoContainer = new VBox(5);
+    private VBox createProfileInfo(final String modLoader, final String version) {
+        final VBox infoContainer = new VBox(5);
 
-        Label versionInfo = new Label(modLoader.substring(0, 1).toUpperCase() + modLoader.substring(1) + " " + version);
+        final Label versionInfo = new Label(modLoader.substring(0, 1).toUpperCase() + modLoader.substring(1) + " " + version);
         versionInfo.setStyle("-fx-text-fill: rgb(149, 128, 255); -fx-font-size: 14px; -fx-font-family: 'Bahnschrift';");
 
         infoContainer.getChildren().add(versionInfo);
@@ -120,38 +131,44 @@ public class ProfileCard extends VBox {
     }
 
     private HBox createStatsContainer() {
-        HBox statsContainer = new HBox(15);
+        final HBox statsContainer = new HBox(15);
         statsContainer.setStyle("-fx-background-color: rgba(0, 0, 0, 0.2); -fx-background-radius: 5; -fx-padding: 8;");
 
-        // Stats pour les mods
-        VBox modsStats = createStatItem("Mods", "23");
+        final VBox modsStats = createStatItem("Mods", "23", FontAwesomeIcon.PUZZLE_PIECE);
 
-        // Stats pour la taille
-        VBox sizeStats = createStatItem("Taille", "1.2 GB");
+        final VBox sizeStats = createStatItem("Taille", "1.2 GB", FontAwesomeIcon.DATABASE);
 
-        // Stats pour le dernier lancement
-        VBox lastPlayedStats = createStatItem("Dernier lancement", "Il y a 2h");
+        final VBox lastPlayedStats = createStatItem("Dernier lancement", "Il y a 2h", FontAwesomeIcon.CLOCK_ALT);
 
         statsContainer.getChildren().addAll(modsStats, sizeStats, lastPlayedStats);
         return statsContainer;
     }
 
-    private VBox createStatItem(String label, String value) {
-        VBox stat = new VBox(2);
+    private VBox createStatItem(final String label, final String value, final FontAwesomeIcon icon) {
+        final VBox stat = new VBox(2);
         stat.setAlignment(Pos.CENTER_LEFT);
 
-        Label valueLabel = new Label(value);
+        final HBox valueBox = new HBox(5);
+        valueBox.setAlignment(Pos.CENTER_LEFT);
+
+        final FontAwesomeIconView iconView = new FontAwesomeIconView(icon);
+        iconView.setGlyphSize(12);
+        iconView.setFill(Color.web("rgb(149, 128, 255)"));
+
+        final Label valueLabel = new Label(value);
         valueLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px; -fx-font-family: 'Bahnschrift'; -fx-font-weight: bold;");
 
-        Label descLabel = new Label(label);
+        valueBox.getChildren().addAll(iconView, valueLabel);
+
+        final Label descLabel = new Label(label);
         descLabel.setStyle("-fx-text-fill: rgb(180, 180, 180); -fx-font-size: 12px; -fx-font-family: 'Bahnschrift';");
 
-        stat.getChildren().addAll(valueLabel, descLabel);
+        stat.getChildren().addAll(valueBox, descLabel);
         return stat;
     }
 
-    private Label createBadge(String text, String color) {
-        Label badge = new Label(text);
+    private Label createBadge(final String text, final String color) {
+        final Label badge = new Label(text);
         badge.setStyle(String.format("""
             -fx-background-color: %s;
             -fx-text-fill: white;
@@ -163,23 +180,48 @@ public class ProfileCard extends VBox {
         return badge;
     }
 
-    private HBox createActionButtons(boolean isDefault) {
-        HBox actions = new HBox(10);
+    private HBox createActionButtons(final boolean isDefault) {
+        final HBox actions = new HBox(10);
         actions.setAlignment(Pos.CENTER_RIGHT);
 
-        CustomButton playButton = new CustomButton("Jouer", "▶");
+        final FontAwesomeIconView playIcon = new FontAwesomeIconView(FontAwesomeIcon.PLAY);
+        playIcon.setGlyphSize(14);
+        playIcon.setFill(Color.WHITE);
+
+        final CustomButton playButton = new CustomButton("Jouer");
+        playButton.setGraphic(playIcon);
+        playButton.setGraphicTextGap(5);
 
         if (!isDefault) {
-            CustomButton editButton = new CustomButton("Modifier", "✏️");
-            editButton.setStyle("-fx-background-color: transparent;");
+            final FontAwesomeIconView editIcon = new FontAwesomeIconView(FontAwesomeIcon.PENCIL);
+            editIcon.setGlyphSize(14);
+            editIcon.setFill(Color.web("rgb(180, 180, 180)"));
 
-            CustomButton deleteButton = new CustomButton("Supprimer", "🗑️");
+            final CustomButton editButton = new CustomButton("Modifier");
+            editButton.setGraphic(editIcon);
+            editButton.setGraphicTextGap(5);
+            //editButton.setStyle("-fx-background-color: transparent;");
+
+            final FontAwesomeIconView deleteIcon = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
+            deleteIcon.setGlyphSize(14);
+            deleteIcon.setFill(Color.web("rgb(180, 180, 180)"));
+
+            final CustomButton deleteButton = new CustomButton("Supprimer");
+            deleteButton.setGraphic(deleteIcon);
+            deleteButton.setGraphicTextGap(5);
             deleteButton.setStyle("-fx-background-color: transparent;");
 
             actions.getChildren().addAll(playButton, editButton, deleteButton);
         } else {
-            CustomButton editButton = new CustomButton("Modifier", "✏️");
-            editButton.setStyle("-fx-background-color: transparent;");
+            final FontAwesomeIconView editIcon = new FontAwesomeIconView(FontAwesomeIcon.PENCIL);
+            editIcon.setGlyphSize(14);
+            editIcon.setFill(Color.web("rgb(180, 180, 180)"));
+
+            final CustomButton editButton = new CustomButton("Modifier");
+            editButton.setGraphic(editIcon);
+            editButton.setGraphicTextGap(5);
+            //editButton.setStyle("-fx-background-color: transparent;");
+
             actions.getChildren().addAll(playButton, editButton);
         }
 

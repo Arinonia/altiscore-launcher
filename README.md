@@ -39,6 +39,9 @@ Check out our [ROADMAP.md](ROADMAP.md) file for detailed information about:
 
 ### Home Panel
 ![Home Panel](screenshots/home.png)
+![Shop Panel](screenshots/shop.png)
+![Profile Panel](screenshots/profile.png)
+![Create Profile Panel](screenshots/create_profile.png)
 
 ### Settings Panel
 

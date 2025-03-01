@@ -1,13 +1,17 @@
-package fr.arinonia.launcher.ui.panels.home;
+package fr.arinonia.launcher.ui.components.home;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.arinonia.launcher.config.models.Account;
 import fr.arinonia.launcher.ui.components.CustomButton;
+import fr.arinonia.launcher.ui.panels.home.HomePanel;
 import fr.arinonia.launcher.ui.panels.settings.SettingsPanel;
 import fr.arinonia.launcher.utils.CallBack;
 import fr.arinonia.launcher.utils.Constants;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
@@ -69,20 +73,21 @@ public class TopBar extends HBox {
         final HBox container = new HBox(10.0D);
         container.setAlignment(Pos.CENTER);
 
-        final CustomButton settingsButton = new CustomButton("⚙");
-        settingsButton.setStyle("-fx-background-color: transparent; -fx-text-fill: rgb(180, 180, 180); -fx-font-size: 18px;");
-        settingsButton.setOnMouseEntered(e ->
-                settingsButton.setStyle("-fx-background-color: rgba(180, 180, 180, 0.2); -fx-text-fill: white; -fx-font-size: 18px;")
+        FontAwesomeIconView settingsIcon = new FontAwesomeIconView(FontAwesomeIcon.GEAR);
+        settingsIcon.setGlyphSize(18);
+        settingsIcon.setFill(Color.web("rgb(180, 180, 180)"));
+        settingsIcon.setCursor(Cursor.HAND);
+        settingsIcon.setOnMouseEntered(e ->
+                settingsIcon.setFill(Color.web("rgb(255, 255, 255)"))
         );
-        settingsButton.setOnMouseExited(e ->
-                settingsButton.setStyle("-fx-background-color: transparent; -fx-text-fill: rgb(180, 180, 180); -fx-font-size: 18px;")
+        settingsIcon.setOnMouseExited(e ->
+                settingsIcon.setFill(Color.web("rgb(180, 180, 180)"))
         );
-        settingsButton.setOnAction(e -> {
-            homePanel.getPanelManager().showPanel(SettingsPanel.class);
+        settingsIcon.setOnMouseClicked(e -> {
+            this.homePanel.getPanelManager().showPanel(SettingsPanel.class);
         });
-
         final Node mainSection = account == null ? createAuthButton() : createAccountInfo(account);
-        container.getChildren().addAll(settingsButton, mainSection);
+        container.getChildren().addAll(settingsIcon, mainSection);
         return container;
     }
 

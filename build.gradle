@@ -23,8 +23,14 @@ dependencies {
 
     //added after the last bootstrap update
     implementation("fr.flowarg:flowupdater:1.9.2")
+    implementation 'de.jensd:fontawesomefx-commons:9.1.2'
+    implementation 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
 }
 
 application {
     mainClass = 'fr.arinonia.launcher.Main'
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
 }

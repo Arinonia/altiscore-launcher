@@ -1,6 +1,9 @@
 package fr.arinonia.launcher.ui.components;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
@@ -29,8 +32,22 @@ public class CustomButton extends Button {
         setupButton();
     }
 
-    public CustomButton(final String text, final String emoji) {
-        super(emoji + " " + text);
+    public CustomButton(final String text, final FontAwesomeIcon icon) {
+        super(text);
+
+        FontAwesomeIconView iconView = new FontAwesomeIconView(icon);
+        iconView.setGlyphSize(14);
+        iconView.setFill(Color.WHITE);
+        this.setGraphic(iconView);
+        this.setGraphicTextGap(5);
+
+        setupButton();
+    }
+
+    public CustomButton(final String text, final Node icon) {
+        super(text);
+        this.setGraphic(icon);
+        this.setGraphicTextGap(5);
         setupButton();
     }
 
@@ -47,7 +64,31 @@ public class CustomButton extends Button {
         this.setEffect(shadow);
     }
 
+
     public void setAsMenuButton() {
         this.setPrefWidth(200);
+    }
+
+
+    public void setIcon(final FontAwesomeIcon icon) {
+        final FontAwesomeIconView iconView = new FontAwesomeIconView(icon);
+        iconView.setGlyphSize(14);
+        iconView.setFill(Color.WHITE);
+        this.setGraphic(iconView);
+    }
+
+
+    public void setIcon(final FontAwesomeIcon icon, final int size) {
+        final FontAwesomeIconView iconView = new FontAwesomeIconView(icon);
+        iconView.setGlyphSize(size);
+        iconView.setFill(Color.WHITE);
+        this.setGraphic(iconView);
+    }
+
+    public void setIcon(final FontAwesomeIcon icon, final int size, final Color color) {
+        final FontAwesomeIconView iconView = new FontAwesomeIconView(icon);
+        iconView.setGlyphSize(size);
+        iconView.setFill(color);
+        this.setGraphic(iconView);
     }
 }
